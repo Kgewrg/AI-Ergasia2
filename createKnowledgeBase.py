@@ -1,8 +1,6 @@
 import random
 
 
-
-
 def returnRandomCharacters(p):
     """Επιστρέφει ενα string μεγεθους p με τυχαιους μοναδικους χαρακητρες"""
     characters = 'abcdefghijklmnopqrstunwxyz'  # για αρχη το μεγιστο που μπορει να παρει το p ειναι 26
