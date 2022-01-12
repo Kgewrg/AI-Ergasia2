@@ -12,15 +12,6 @@ def returnRandomCharacters(p):
         retString += tmpChar
     return retString
 
-
-def flip(c):
-    """ Κάνει τον πεζο-κεφαλαίο και τον κεφαλαίο-πεζο """
-    if c.islower():
-        return c.upper()
-    else:
-        return c.lower()
-
-
 def retSentance(l, p):
     """ Επιστρέφει μια πρόταση τυχαίου μηκους (απο 0 εως l) με p πληθος διαθέσημων λεκτικών"""
 
@@ -35,7 +26,7 @@ def retSentance(l, p):
             tmpChar = availableCharacters[random.randint(0, p-1)]
             flipChance = random.randint(0, 1)
             if (flipChance == 1):
-                tmpChar = flip(tmpChar)  # Αναστρέφουμε τον χαρακτήρα
+                tmpChar = tmpChar.swapcase()  # Αναστρέφουμε τον χαρακτήρα
             # TODO: ελεγχο για το αν ο not(γυρισμένος) ειναι ήδη στην πρώταση
 
         sentance += tmpChar  # κάθε νεο επιλεγμένο προσθέτεται στην πρόταση
@@ -50,10 +41,27 @@ def readKnowledgeBase():
     kb = []
     kbfile = open('knowledgeBase.txt', 'r')
     for line in kbfile:
+        if (line[0].isnumeric()):
+            continue
         line = line.strip('\n')
         kb.append(line)
-
+    kbfile.close()
     return kb
+
+def retKBcharacteristics():
+    """Επιστρέφει τα χαρακτηριστικά της βάσης δεδομένων
+    returns:
+        c, l, p:
+        c (int): Πλήθος πρωτάσεων
+        l (int): Μέγιστο πλήθος λεκτικών σε κάθε πρόταση (μέγιστο μήκος πρότασης)
+        p (int): Πλήθος διαθέσιμων λεκτικών για κάθε πρόταση
+    """
+    kbfile = open('knowledgeBase.txt', 'r')
+    characteristics = kbfile.readline()
+    kbfile.close()
+    c, l, p = characteristics.split(',')
+
+    return int(c), int(l), int(p)
 
 
 
