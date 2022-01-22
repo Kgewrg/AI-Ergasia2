@@ -102,23 +102,23 @@ def sentenceFullResolusion(sentance1, sentance2):
 def resolution(kb, newCharacter=''):
     tmpKB = kb.copy()
     newCharacter = newCharacter.swapcase()  # Ελέγχουμε για το not απο αυτο που εισάγχθηκε
+    tmpKB.append(newCharacter)
     newSentences = []
     # Ελεχγο για το ποιες προτάσεις μπορεί να γίνει ανάλυση υλοποίηση της ανάλυσης
-
-    while (1):
-        availableResolutions = []
-        for i in range(len(tmpKB)):
-            if (newCharacter.swapcase() in tmpKB[i]):
-                availableResolutions.append(i)  # σε ποιες προτάσεις μπορουν να γίνει resolution
+    # TODO:  Πρωτα τον έλεγχο για το λεκτικό που έρχεται και μετα τις προτάσεις μεταξύ τους
+    availableResolutions = []
+    for sentenceIndex in range(len(tmpKB)):  # για κάθε προταση
+        for char in tmpKB[sentenceIndex]:  # για κάθε λεκτηκο στην πρόταση
+            if (char.swapcase() in tmpKB[sentenceIndex]):
+                availableResolutions.append(sentenceIndex)  # σε ποιες προτάσεις μπορουν να γίνει resolution
         if (len(availableResolutions) == 0):
             # Δεν μπορούν αν γίνουν άλλες αναλύσης, δεν ξέρεις τι σημαίνει ακόμα αυτό
             break
         for i in availableResolutions:
             newSentences.append(sentenceFullResolusion(tmpKB[i], newCharacter))
-        tmpKB.append(newSentences)
+        tmpKB += newSentences
         print(tmpKB)
-
-    return newSentences
+    return  newSentences
 
 
 
