@@ -91,34 +91,54 @@ def sentenceFullResolusion(sentance1, sentance2):
     returns:
         result (string): Το αποτέλεσμα της ανάλυσης
     """
+    validCase = False
     result = sentance1+sentance2
     for i in result:
         if i.swapcase() in result:
+            validCase = True
             result = result.replace(i, '')
             result = result.replace(i.swapcase(), '')
+    result = "".join(set(result))  # Αφαιρει τα δυπλοτυπα, προσορινα μετατρεπει το string σε set
 
-    return result
+    if validCase:
+        return result
+    else:
+        return
+
 
 def resolution(kb, newCharacter=''):
-    tmpKB = kb.copy()
-    newCharacter = newCharacter.swapcase()  # Ελέγχουμε για το not απο αυτο που εισάγχθηκε
-    tmpKB.append(newCharacter)
-    newSentences = []
-    # Ελεχγο για το ποιες προτάσεις μπορεί να γίνει ανάλυση υλοποίηση της ανάλυσης
-    # TODO:  Πρωτα τον έλεγχο για το λεκτικό που έρχεται και μετα τις προτάσεις μεταξύ τους
-    availableResolutions = []
-    for sentenceIndex in range(len(tmpKB)):  # για κάθε προταση
-        for char in tmpKB[sentenceIndex]:  # για κάθε λεκτηκο στην πρόταση
-            if (char.swapcase() in tmpKB[sentenceIndex]):
-                availableResolutions.append(sentenceIndex)  # σε ποιες προτάσεις μπορουν να γίνει resolution
-        if (len(availableResolutions) == 0):
-            # Δεν μπορούν αν γίνουν άλλες αναλύσης, δεν ξέρεις τι σημαίνει ακόμα αυτό
-            break
-        for i in availableResolutions:
-            newSentences.append(sentenceFullResolusion(tmpKB[i], newCharacter))
-        tmpKB += newSentences
-        print(tmpKB)
-    return  newSentences
+    """ Υλοποίηση της ανάλυσης μεταξύ της βάσης γνώσης και ένα νέο λεκτικό
+        params:
+            kb (array): Η βάση γνώσης σε μορφή CNF
+            newCharacter (char): Το νέο λεκτικό με το οποίο θα γίνει η ανάλυση
+        returns:
+            True, kb (array):  Αν γίνεται entailment, η νέα βαση γνώσης
+            False, kb (array):  Αν δεν γίνεται entailment, η νέα βαση γνώσης
+    """
+    # Βάζουμε το νέο λεκτικό στην αρχή της βάσης γνώσης για να του δώσουμε προταιρεότητα
+    # επίσης το λεκτικό ειναι "γυρισμένο"
+    kb.insert(0, newCharacter.swapcase())
+    for i in kb:  # Αναλύουμε τις προτάσεις της βάσης γνώσης μεταξύ του
+        result = []  # Πινακας που θα αποθυκεύονται τα αποτελέσματα για κάθε πρόταση με όλες τις υπόλοιπες
+        for j in kb:
+            print("Doing resolution on:", i, j)
+            tmpResult = sentenceFullResolusion(i, j)  # Ανάλυση
+            if (tmpResult is not None) and (tmpResult not in result) and (tmpResult not in kb):
+                # Έλεγος για αν το αποτέλεσμα της ανάλυσης ειναι έγκυρο,
+                # (νεα πρόταση) (δεν έχει βρεθεί ήδη) (Δεν είναι ήδη στην βάση γνωσής)
+                result.append(tmpResult)
+
+                if ('' in result):  # Έλεγχος για άτοπο
+                    kb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
+                    return True, kb  # Γίνεται entailment
+                print("resolution:", result)
+        kb += result  # Πρόσθεση των νέων προτάσεων που βρέθηκαν
+
+    kb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
+
+    # Επιστρέφει "βρομικη" την βάσης γνώσης (με προτάσεις που θα φέρουν άτοπο)
+    # TODO: Καθάρισμα
+    return False, kb
 
 
 
@@ -127,15 +147,8 @@ def resolution(kb, newCharacter=''):
 def main():
     kb, characters = ckb.readKnowledgeBase()
     #gsat(kb,10,20)
-
-    print(resolution(kb, "b"))
-
-
-
-
-
-    print("Hello2")
-
+    print(kb)
+    print(resolution(kb, "B"))
 
 
 

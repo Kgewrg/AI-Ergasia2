@@ -50,8 +50,8 @@ def readKnowledgeBase():
             i+=1
             continue
         line = line.strip('\n')
-        while (len(line)< l):
-            line+=' '
+        # while (len(line)< l): # γιατι προσθετεις κενα
+        #     line+=' '
         kb.append(line)
     kbfile.close()
     return kb,characters
