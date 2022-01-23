@@ -153,7 +153,7 @@ def main():
     print(kb)
     print(resolution(kb, "B"))
 
-    print("gia su kokla")
+    print("this is a test")
 
 
 
