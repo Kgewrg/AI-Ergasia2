@@ -91,14 +91,17 @@ def sentenceFullResolusion(sentance1, sentance2):
     returns:
         result (string): Το αποτέλεσμα της ανάλυσης
     """
+    sentance1 = sentance1.strip(' ')
+    sentance2 = sentance2.strip(' ')
     validCase = False
     result = sentance1+sentance2
     for i in result:
-        if i.swapcase() in result:
+        if (i.swapcase() in result):
             validCase = True
             result = result.replace(i, '')
             result = result.replace(i.swapcase(), '')
     result = "".join(set(result))  # Αφαιρει τα δυπλοτυπα, προσορινα μετατρεπει το string σε set
+    # Αυτό ομως χαλάει την σειρά=
 
     if validCase:
         return result
@@ -148,9 +151,7 @@ def main():
     kb, characters = ckb.readKnowledgeBase()
     #gsat(kb,10,20)
     print(kb)
-    print(resolution(kb, "B"))
-
-
+    # print(resolution(kb, "B"))
 
 
 
