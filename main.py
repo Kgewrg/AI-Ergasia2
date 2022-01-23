@@ -153,6 +153,8 @@ def main():
     print(kb)
     print(resolution(kb, "B"))
 
+    print("Hello omorfe")
+
 
 
 
