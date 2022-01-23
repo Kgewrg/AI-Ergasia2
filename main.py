@@ -101,12 +101,11 @@ def sentenceFullResolusion(sentance1, sentance2):
             result = result.replace(i, '')
             result = result.replace(i.swapcase(), '')
     result = "".join(set(result))  # Αφαιρει τα δυπλοτυπα, προσορινα μετατρεπει το string σε set
-    # Αυτό ομως χαλάει την σειρά=
 
     if validCase:
         return result
     else:
-        return
+        return  # None
 
 
 def resolution(kb, newCharacter=''):
@@ -140,7 +139,8 @@ def resolution(kb, newCharacter=''):
     kb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
 
     # Επιστρέφει "βρομικη" την βάσης γνώσης (με προτάσεις που θα φέρουν άτοπο)
-    # TODO: Καθάρισμα
+    # TODO: Καθάρισμα, Να μην προσθέτει οταν δεν γίνεται entailed
+
     return False, kb
 
 
@@ -151,7 +151,7 @@ def main():
     kb, characters = ckb.readKnowledgeBase()
     #gsat(kb,10,20)
     print(kb)
-    # print(resolution(kb, "B"))
+    print(resolution(kb, "B"))
 
 
 
