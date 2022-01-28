@@ -124,7 +124,7 @@ def resolution(tmpkb, newCharacter=''):
     for i in tmpkb:  # Αναλύουμε τις προτάσεις της βάσης γνώσης μεταξύ του
         result = []  # Πινακας που θα αποθυκεύονται τα αποτελέσματα για κάθε πρόταση με όλες τις υπόλοιπες
         for j in tmpkb:
-            print("Doing resolution on:", i, j)
+            # print("Doing resolution on:", i, j)
             tmpResult = sentenceFullResolusion(i, j)  # Ανάλυση
             if (tmpResult is not None) and (tmpResult not in result) and (tmpResult not in tmpkb):
                 # Έλεγος για αν το αποτέλεσμα της ανάλυσης ειναι έγκυρο,
@@ -134,7 +134,7 @@ def resolution(tmpkb, newCharacter=''):
                 if ('' in result):  # Έλεγχος για άτοπο
                     tmpkb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
                     return True, tmpkb  # Γίνεται entailment
-                print("resolution:", result)
+                # print("resolution:", result)
         tmpkb += result  # Πρόσθεση των νέων προτάσεων που βρέθηκαν
 
     tmpkb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
