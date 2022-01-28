@@ -108,40 +108,37 @@ def sentenceFullResolusion(sentance1, sentance2):
         return  # None
 
 
-def resolution(kb, newCharacter=''):
+def resolution(tmpkb, newCharacter=''):
     """ Υλοποίηση της ανάλυσης μεταξύ της βάσης γνώσης και ένα νέο λεκτικό
         params:
             kb (array): Η βάση γνώσης σε μορφή CNF
             newCharacter (char): Το νέο λεκτικό με το οποίο θα γίνει η ανάλυση
         returns:
             True, kb (array):  Αν γίνεται entailment, η νέα βαση γνώσης
-            False, kb (array):  Αν δεν γίνεται entailment, η νέα βαση γνώσης
+            False:  Αν δεν γίνεται entailment
     """
+    tmpkb = tmpkb.copy() # .copy, γιατι αλλιώς αλλάζοντας την βάση γνώσης στην συνάρτηση αλλάζει και στην main
     # Βάζουμε το νέο λεκτικό στην αρχή της βάσης γνώσης για να του δώσουμε προταιρεότητα
     # επίσης το λεκτικό ειναι "γυρισμένο"
-    kb.insert(0, newCharacter.swapcase())
-    for i in kb:  # Αναλύουμε τις προτάσεις της βάσης γνώσης μεταξύ του
+    tmpkb.insert(0, newCharacter.swapcase())
+    for i in tmpkb:  # Αναλύουμε τις προτάσεις της βάσης γνώσης μεταξύ του
         result = []  # Πινακας που θα αποθυκεύονται τα αποτελέσματα για κάθε πρόταση με όλες τις υπόλοιπες
-        for j in kb:
+        for j in tmpkb:
             print("Doing resolution on:", i, j)
             tmpResult = sentenceFullResolusion(i, j)  # Ανάλυση
-            if (tmpResult is not None) and (tmpResult not in result) and (tmpResult not in kb):
+            if (tmpResult is not None) and (tmpResult not in result) and (tmpResult not in tmpkb):
                 # Έλεγος για αν το αποτέλεσμα της ανάλυσης ειναι έγκυρο,
                 # (νεα πρόταση) (δεν έχει βρεθεί ήδη) (Δεν είναι ήδη στην βάση γνωσής)
                 result.append(tmpResult)
 
                 if ('' in result):  # Έλεγχος για άτοπο
-                    kb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
-                    return True, kb  # Γίνεται entailment
+                    tmpkb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
+                    return True, tmpkb  # Γίνεται entailment
                 print("resolution:", result)
-        kb += result  # Πρόσθεση των νέων προτάσεων που βρέθηκαν
+        tmpkb += result  # Πρόσθεση των νέων προτάσεων που βρέθηκαν
 
-    kb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
-
-    # Επιστρέφει "βρομικη" την βάσης γνώσης (με προτάσεις που θα φέρουν άτοπο)
-    # TODO: Καθάρισμα, Να μην προσθέτει οταν δεν γίνεται entailed
-
-    return False, kb
+    tmpkb.pop(0)  # Αφαίρεση του προσορινού γυρισμένου λεκτικού
+    return False, None
 
 
 
@@ -151,9 +148,14 @@ def main():
     kb, characters = ckb.readKnowledgeBase()
     #gsat(kb,10,20)
     print(kb)
-    print(resolution(kb, "B"))
+    entailed, newkb = resolution(kb, "")
+    if newkb is not None:
+        # Εγινε το entailement και αρα ενημερώνεται η βαση γνώσης
+        kb = newkb
 
-    print("gia su kokla")
+
+    print(entailed, kb)
+
 
 
 

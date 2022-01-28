@@ -1,6 +1,5 @@
 import random
 
-
 def returnRandomCharacters(p):
     """Επιστρέφει ενα string μεγεθους p με τυχαιους μοναδικους χαρακητρες"""
     characters = 'abcdefghijklmnopqrstunwxyz'  # για αρχη το μεγιστο που μπορει να παρει το p ειναι 26
@@ -39,22 +38,22 @@ def readKnowledgeBase():
         returns:(array) πινακας με πρωτη γραμμη τα χαρακτηριστικα (c,l,p)
                 οι υπολυπες γραμμες οι προτάσεις """
 
-    c,l,p=retKBcharacteristics()
-    i=0
+    c, l, p = retKBcharacteristics()
+    i = 0
     kb = []
     kbfile = open('knowledgeBase.txt', 'r')
     for line in kbfile:
-        if (i==0 or i==1): #αγνωούμε τις 2 πρώτες γραμμές για να κρατήσουμε μόνο την Βάση γνώσης
+        if (i == 0 or i == 1): #αγνωούμε τις 2 πρώτες γραμμές για να κρατήσουμε μόνο την Βάση γνώσης
             if (i == 1):
                 characters = line
-            i+=1
+            i += 1
             continue
         line = line.strip('\n')
-        while (len(line)< l): # γιατι προσθετεις κενα
-            line+=' '
+        while (len(line) < l):  # γιατι προσθετεις κενα
+            line += ' '
         kb.append(line)
     kbfile.close()
-    return kb,characters
+    return kb, characters
 
 def retKBcharacteristics():
     """Επιστρέφει τα χαρακτηριστικά της βάσης δεδομένων
@@ -82,7 +81,7 @@ def createKnowledgeBase(p, c, l):
 
     kb = []
     availableCharacters = "abc"
-    for i in range(c+1):
+    for i in range(c):
         sentance = ''
         while sentance in kb:
             sentance = retSentance(l, p,availableCharacters)
