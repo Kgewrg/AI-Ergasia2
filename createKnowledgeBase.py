@@ -38,7 +38,7 @@ def readKnowledgeBase():
         returns:(array) πινακας με πρωτη γραμμη τα χαρακτηριστικα (c,l,p)
                 οι υπολυπες γραμμες οι προτάσεις """
 
-    c, l, p = retKBcharacteristics()
+    p, c, l = retKBcharacteristics()
     i = 0
     kb = []
     kbfile = open('knowledgeBase.txt', 'r')
