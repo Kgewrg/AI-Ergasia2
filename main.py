@@ -161,7 +161,7 @@ def main():
         print("Εισάγετε χαρακτήρα για έλεγχο, απο τους εξής:", characters)
         newcharacter = input()
         while (len(newcharacter) < l):  # γιατι προσθετεις κενα
-            newcharacter += '-'
+            newcharacter += ' '
         kb.insert(0, newcharacter.swapcase())
 
         c += 1
@@ -176,8 +176,8 @@ def main():
             if entailed:
                 print("Ο αλγόρυθμος της ανάλυσης βρήκε λύση και το λεκτικο", newcharacter, "γινεται entailed")
                 for i in tmpKB:  # Αποφυγή εισαγωγης διπλότυπων
-                    while (len(i) <= l):  # γιατι προσθετεις κενα
-                        i += '-'
+                    while (len(i) < l):  # γιατι προσθετεις κενα
+                        i += ' '
                     if (i in kb) or (i.swapcase() in kb):
                         continue
                     kb.append(i)
@@ -192,8 +192,8 @@ def main():
                 kbfile.write('\n')
                 kbfile.write(characters)
                 for i in kb:
-                    kbfile.write(str(i))
                     kbfile.write('\n')
+                    kbfile.write(str(i))
                 kbfile.close()
 
             else:
