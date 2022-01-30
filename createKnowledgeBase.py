@@ -86,7 +86,6 @@ def createKnowledgeBase(p, c, l):
         while sentance in kb:
             sentance = retSentance(l, p, availableCharacters)
         kb.append(sentance)
-
     # Εγραφή της Βάσης σε αρχείο
     knowledgeBaseFile = open('knowledgeBase.txt', 'w')
     knowledgeBaseFile.write(str(p) + ',' + str(c) + ',' + str(l))
@@ -95,6 +94,7 @@ def createKnowledgeBase(p, c, l):
     for i in kb:
         knowledgeBaseFile.write(i)
         knowledgeBaseFile.write('\n')
+
 
     knowledgeBaseFile.close()
 #createKnowledgeBase(3, 5, 3)
