@@ -163,6 +163,7 @@ def main():
         while (len(newcharacter) < l):  # γιατι προσθετεις κενα
             newcharacter += ' '
         kb.insert(0, newcharacter.swapcase())
+        print(kb)
 
         c += 1
         if gsat(c, 1, 1):
