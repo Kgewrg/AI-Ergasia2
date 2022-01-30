@@ -156,7 +156,7 @@ def main():
     counter = 0
     while atopo:
         counter += 1
-        ckb.createKnowledgeBase(3, 10, 3)
+        ckb.createKnowledgeBase(p, c, l)
         kb, characters = ckb.readKnowledgeBase()
         atopo, _ = resolution(kb, " ")
     p, c, l = ckb.retKBcharacteristics()
