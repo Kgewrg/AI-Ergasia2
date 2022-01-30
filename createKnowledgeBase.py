@@ -74,17 +74,17 @@ def retKBcharacteristics():
 
 
 def createKnowledgeBase(p, c, l):
-    """ Φτιάχνει και επιστρέφει την βάση γνώσης με c πληθος πρωτάσεων
+    """ Φτιάχνει σε αρχείο την βάση γνώσης με c πληθος πρωτάσεων
             κάθε πρόταση μήκους 1 εως l
             και πληθος p διαθέσημα λεκτικά για κάθε πρόταση (κάθε προταση εχει διαφορετικά λεκτικά)
         Επίσης η βάση γνώσης γράφεται στο αρχειο knowladgeBase.txt"""
 
     kb = []
-    availableCharacters = "abc"
-    for i in range(c):
+    availableCharacters = returnRandomCharacters(p)
+    for i in range(c+1):
         sentance = ''
         while sentance in kb:
-            sentance = retSentance(l, p,availableCharacters)
+            sentance = retSentance(l, p, availableCharacters)
         kb.append(sentance)
 
     # Εγραφή της Βάσης σε αρχείο
@@ -97,5 +97,4 @@ def createKnowledgeBase(p, c, l):
         knowledgeBaseFile.write('\n')
 
     knowledgeBaseFile.close()
-    return kb
 #createKnowledgeBase(3, 5, 3)
