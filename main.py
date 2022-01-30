@@ -144,7 +144,13 @@ def resolution(tmpkb, newCharacter=''):
 
 def main():
     # Μπαινουμε σε ένα while για να σιγουρευτούμε οτι η βάηση γνωσης δεν οδηγει σε ατοπο.
-    ckb.createKnowledgeBase(3, 10, 3)
+    p=int(input("Δώσε p"))
+    c=int(input("Δώσε c"))
+    l=int(input("Δώσε l"))
+    while(l>p):
+        print("Το l δεν μπορεί να είναι μεγαλύτερο του p,δώσε l")
+        l=int(input())
+    ckb.createKnowledgeBase(p, c, l)
     kb, characters = ckb.readKnowledgeBase()
     atopo, _ = resolution(kb, " ")
     counter = 0
@@ -153,20 +159,17 @@ def main():
         ckb.createKnowledgeBase(3, 10, 3)
         kb, characters = ckb.readKnowledgeBase()
         atopo, _ = resolution(kb, " ")
-    print("Δημηουργίθηκε η νεα βάση γνωσης, χρειάστηκε", counter, "προσπάθειες")
-    print("Η νέα βάση γνώσης:\n")
-    print(kb)
     p, c, l = ckb.retKBcharacteristics()
+    print("Δημηουργίθηκε η νεα βάση γνωσης, χρειάστηκε", counter, "προσπάθειες")
     while (1):
         print("Εισάγετε χαρακτήρα για έλεγχο, απο τους εξής:", characters)
         newcharacter = input()
         while (len(newcharacter) < l):  # γιατι προσθετεις κενα
             newcharacter += ' '
         kb.insert(0, newcharacter.swapcase())
-        print(kb)
 
         c += 1
-        if gsat(c, 1, 1):
+        if gsat(c, 10, 20):
             print("Ο gsat συμπέρανε οτι ο λεκτικό που εχει εισαχθεί δεν γίνεται entailed στην βάση γνωσης")
             kb.pop(0)  # Αφαίρεση του προσωρινού στοιχείου
             c -= 1
@@ -182,6 +185,7 @@ def main():
                     if (i in kb) or (i.swapcase() in kb):
                         continue
                     kb.append(i)
+                print(kb.pop(-1))
 
                 print("Η νεά βάσης γνώσης ειναι: \n", kb)
 
@@ -200,7 +204,7 @@ def main():
             else:
                 print("Ο αλγόρυθμος της ανάλυσης συμπαίρανε οτι ο χαρακτήρας", newcharacter, "δεν γινεται entailed")
 
-        tmpchar = input("Shall we continue sir? (y/n)")
+        tmpchar = input("Θέλετε να εισάγετε νέο λεκτικό? (y/n)")
         if tmpchar == "n":
             break
 
