@@ -33,9 +33,10 @@ def flip(values,i):
         binaryvalues[i] = True
 
 
-def gsat(kb,maxTries,maxFlips):
+def gsat(maxsentences,maxTries,maxFlips):
     kb, characters = ckb.readKnowledgeBase()
     p, c, l = ckb.retKBcharacteristics()
+    c=maxsentences
     binaryvalues=[]#μεταβλητή για να κρατάει boolean τιμές στις θέσεις τον λεκτικών
     mincost=l#μεταβλητή για να κρατάει το μικρότερο κόστος των κινήσεων
     breakcondition=0
@@ -146,7 +147,7 @@ def resolution(tmpkb, newCharacter=''):
 
 def main():
     kb, characters = ckb.readKnowledgeBase()
-    #gsat(kb,10,20)
+    #gsat(c,10,20)
     print(kb)
     entailed, newkb = resolution(kb, "")
     if newkb is not None:
